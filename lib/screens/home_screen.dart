@@ -1,7 +1,47 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-class HomeScreen extends StatelessWidget {
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  PageController _pageController = PageController();
+  late Timer timer;
+  int currentIndex = 0;
+  List<String> textList = [
+    "Find Your Dream\nHome with Ease!",
+    "Learn, Build,\nRepeat! asdfasdf",
+    "Create Amazing \nUI! asdfasd",
+    "Master Animation!\nsdfasdf",
+    "Keep Coding! \nadsfasd asdfasdf",
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(Duration(seconds: 2), (timer) {
+      currentIndex = (currentIndex + 1) % textList.length;
+      _pageController.animateToPage(
+        currentIndex,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +71,11 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 48.0),
               Padding(
-                padding: const EdgeInsets.all(18.0),
+                padding: const EdgeInsets.symmetric(horizontal: 18),
                 child: Row(
                   children: [
                     Hero(
@@ -47,6 +88,26 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+              ),
+              const SizedBox(height: 32.0),
+
+              Container(
+                height: 120.0,
+                padding: const EdgeInsets.only(left: 26.0),
+                child: PageView.builder(
+                  scrollDirection: Axis.vertical,
+                  controller: _pageController,
+                  itemCount: textList.length,
+                  itemBuilder: (context, index) {
+                    return Text(
+                      textList[index],
+                      style: GoogleFonts.roboto(
+                        fontSize: 36.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
