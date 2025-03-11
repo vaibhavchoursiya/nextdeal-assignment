@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nextdeal_app/widgets/animated_text_widget.dart';
 import 'package:nextdeal_app/widgets/navbar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -97,24 +98,7 @@ class NavBar extends StatelessWidget {
         Navbar(),
         const SizedBox(height: 32.0),
 
-        Container(
-          height: 120.0,
-          padding: const EdgeInsets.only(left: 26.0),
-          child: PageView.builder(
-            scrollDirection: Axis.vertical,
-            controller: _pageController,
-            itemCount: textList.length,
-            itemBuilder: (context, index) {
-              return Text(
-                textList[index],
-                style: GoogleFonts.roboto(
-                  fontSize: 36.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              );
-            },
-          ),
-        ),
+        AnimatedTextWidget(pageController: _pageController, textList: textList),
       ],
     );
   }
