@@ -14,8 +14,9 @@ class AnimatedTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120.0,
+      height: 115.0,
       padding: const EdgeInsets.only(left: 26.0),
+      alignment: Alignment.center,
       child: PageView.builder(
         scrollDirection: Axis.vertical,
         controller: _pageController,
@@ -26,6 +27,7 @@ class AnimatedTextWidget extends StatelessWidget {
             style: GoogleFonts.roboto(
               fontSize: 36.0,
               fontWeight: FontWeight.w600,
+              height: 1.2,
             ),
           );
         },

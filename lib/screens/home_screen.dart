@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nextdeal_app/widgets/animated_text_widget.dart';
@@ -20,18 +19,30 @@ class _HomeScreenState extends State<HomeScreen> {
   bool startDragAnimation = false;
 
   late Timer timer;
+
+  /// I can use state management (Bloc or Provider) if it required here its a dummy data
+  /// and works that's why I don't use any state management because it will unneccessary make thing
+  /// complex.
   int currentIndex = 0;
   List<String> textList = [
     "Find Your Dream\nHome with Ease!",
-    "Learn, Build,\nRepeat! asdfasdf",
-    "Create Amazing \nUI! asdfasd",
-    "Master Animation!\nsdfasdf",
+    "Verified Listings for\nSafe Investments!",
+    "Buy, Sell & Rent\n-All in One Place!",
+    "Expert Guidance\nfor Smart Moves",
     "Keep Coding! \nadsfasd asdfasdf",
   ];
 
-  List<String> imageUrl = List.generate(5, (e) {
-    return "https://picsum.photos/200/300";
-  });
+  // List<String> imageUrl = List.generate(5, (e) {
+  //   return "https://picsum.photos/200/300";
+  // });
+
+  List<String> imageUrl = [
+    "assets/slide_images/slide_1.jpg",
+    "assets/slide_images/slide_2.jpg",
+    "assets/slide_images/slide_3.jpg",
+    "assets/slide_images/slide_4.jpg",
+    "assets/slide_images/slide_5.jpg",
+  ];
 
   @override
   void initState() {
@@ -63,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Stack(
         children: [
+          /// Container Background Animation
           Positioned(
             left: 0.0,
             top: -110.0,
@@ -89,17 +101,21 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
           ),
+
+          /// NavBar with some vertical spacing.
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [const SizedBox(height: 48.0), Navbar()],
           ),
 
+          /// Column for showing carousel, indicator with get started button.
           AnimatedPositioned(
-            duration: Duration(milliseconds: 500),
-            top: startDragAnimation ? 100 : 500,
+            duration: Duration(milliseconds: 400),
+            top: startDragAnimation ? 100 : 1000,
             left: 0.0,
             right: 0.0,
             height: 750,
+            curve: Curves.easeInSine,
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -109,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     pageController: _textScrollController,
                     textList: textList,
                   ),
-                  const SizedBox(height: 12.0),
+                  const SizedBox(height: 2.0),
 
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 21),
@@ -133,8 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             borderRadius: BorderRadius.circular(20.0),
                             image: DecorationImage(
                               fit: BoxFit.cover,
+                              filterQuality: FilterQuality.medium,
 
-                              image: NetworkImage(imageUrl[index]),
+                              image: AssetImage(imageUrl[index]),
                             ),
                           ),
                         );
@@ -162,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     }),
                   ),
 
-                  const SizedBox(height: 24.0),
+                  const SizedBox(height: 28.0),
 
                   Container(
                     width: double.infinity,
