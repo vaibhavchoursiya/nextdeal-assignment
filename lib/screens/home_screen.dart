@@ -17,6 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
   PageController _textScrollController = PageController();
   PageController _carouselController = PageController();
 
+  bool startDragAnimation = false;
+
   late Timer timer;
   int currentIndex = 0;
   List<String> textList = [
@@ -68,6 +70,10 @@ class _HomeScreenState extends State<HomeScreen> {
               duration: Duration(milliseconds: 700),
               tween: Tween(begin: MediaQuery.of(context).size, end: Size(0, 0)),
               curve: Curves.linear,
+              onEnd: () {
+                startDragAnimation = true;
+                setState(() {});
+              },
               builder: (context, value, child) {
                 return Container(
                   width: value.width + 110,
@@ -85,67 +91,101 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 48.0),
-              Navbar(),
-              const SizedBox(height: 32.0),
+            children: [const SizedBox(height: 48.0), Navbar()],
+          ),
 
-              AnimatedTextWidget(
-                pageController: _textScrollController,
-                textList: textList,
-              ),
-              const SizedBox(height: 12.0),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 21),
-                height: 420.0,
-                child: PageView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  controller: _carouselController,
-                  onPageChanged: (value) {
-                    currentIndex = value;
-                    setState(() {});
-                  },
+          AnimatedPositioned(
+            duration: Duration(seconds: 1),
+            top: 100,
+            left: 0.0,
+            right: 0.0,
+            height: 750,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 32.0),
 
-                  itemBuilder: (context, index) {
-                    return Container(
-                      width: double.infinity,
-                      height: 420.0,
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(20.0),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
+                  AnimatedTextWidget(
+                    pageController: _textScrollController,
+                    textList: textList,
+                  ),
+                  const SizedBox(height: 12.0),
 
-                          image: NetworkImage(imageUrl[index]),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 21),
+                    height: 420.0,
+                    child: PageView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 5,
+                      controller: _carouselController,
+                      onPageChanged: (value) {
+                        currentIndex = value;
+                        setState(() {});
+                      },
+
+                      itemBuilder: (context, index) {
+                        return Container(
+                          width: double.infinity,
+                          height: 420.0,
+                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(20.0),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+
+                              image: NetworkImage(imageUrl[index]),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(imageUrl.length, (index) {
+                      return AnimatedContainer(
+                        duration: Duration(milliseconds: 500),
+                        width: currentIndex == index ? 40 : 10,
+                        height: 10,
+                        margin: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color:
+                              currentIndex == index
+                                  ? Colors.blue
+                                  : Color(0xFFCCDDFC),
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                      );
+                    }),
+                  ),
+
+                  const SizedBox(height: 24.0),
+
+                  Container(
+                    width: double.infinity,
+
+                    height: 60.0,
+                    margin: const EdgeInsets.symmetric(horizontal: 26.0),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.amber,
+                      ),
+                      child: Text(
+                        "Get Started",
+                        style: GoogleFonts.roboto(
+                          color: Colors.white,
+                          fontSize: 22,
                         ),
                       ),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 16.0),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(imageUrl.length, (index) {
-                  return AnimatedContainer(
-                    duration: Duration(milliseconds: 500),
-                    width: currentIndex == index ? 40 : 10,
-                    height: 10,
-                    margin: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color:
-                          currentIndex == index
-                              ? Colors.blue
-                              : Color(0xFFCCDDFC),
-                      borderRadius: BorderRadius.circular(5.0),
                     ),
-                  );
-                }),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ],
       ),
