@@ -14,7 +14,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  PageController _pageController = PageController();
+  PageController _textScrollController = PageController();
+  PageController _carouselController = PageController();
+
   late Timer timer;
   int currentIndex = 0;
   List<String> textList = [
@@ -25,12 +27,21 @@ class _HomeScreenState extends State<HomeScreen> {
     "Keep Coding! \nadsfasd asdfasdf",
   ];
 
+  List<String> imageUrl = List.generate(5, (e) {
+    return "https://picsum.photos/200/300";
+  });
+
   @override
   void initState() {
     super.initState();
     timer = Timer.periodic(Duration(seconds: 2), (timer) {
       currentIndex = (currentIndex + 1) % textList.length;
-      _pageController.animateToPage(
+      _textScrollController.animateToPage(
+        currentIndex,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+      _carouselController.animateToPage(
         currentIndex,
         duration: Duration(milliseconds: 500),
         curve: Curves.easeInOut,
@@ -41,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     timer.cancel();
-    _pageController.dispose();
+    _textScrollController.dispose();
     super.dispose();
   }
 
@@ -72,34 +83,72 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
           ),
-          NavBar(pageController: _pageController, textList: textList),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 48.0),
+              Navbar(),
+              const SizedBox(height: 32.0),
+
+              AnimatedTextWidget(
+                pageController: _textScrollController,
+                textList: textList,
+              ),
+              const SizedBox(height: 12.0),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 21),
+                height: 420.0,
+                child: PageView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5,
+                  controller: _carouselController,
+                  onPageChanged: (value) {
+                    currentIndex = value;
+                    setState(() {});
+                  },
+
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: double.infinity,
+                      height: 420.0,
+                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(20.0),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+
+                          image: NetworkImage(imageUrl[index]),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 16.0),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(imageUrl.length, (index) {
+                  return AnimatedContainer(
+                    duration: Duration(milliseconds: 500),
+                    width: currentIndex == index ? 40 : 10,
+                    height: 10,
+                    margin: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color:
+                          currentIndex == index
+                              ? Colors.blue
+                              : Color(0xFFCCDDFC),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  );
+                }),
+              ),
+            ],
+          ),
         ],
       ),
-    );
-  }
-}
-
-class NavBar extends StatelessWidget {
-  const NavBar({
-    super.key,
-    required PageController pageController,
-    required this.textList,
-  }) : _pageController = pageController;
-
-  final PageController _pageController;
-  final List<String> textList;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 48.0),
-        Navbar(),
-        const SizedBox(height: 32.0),
-
-        AnimatedTextWidget(pageController: _pageController, textList: textList),
-      ],
     );
   }
 }
