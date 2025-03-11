@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nextdeal_app/widgets/navbar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -70,50 +71,51 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 48.0),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18),
-                child: Row(
-                  children: [
-                    Hero(
-                      tag: "logo",
-                      child: Image.asset(
-                        "assets/logo.png",
-                        height: 52,
-                        fit: BoxFit.contain,
-                        filterQuality: FilterQuality.high,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 32.0),
-
-              Container(
-                height: 120.0,
-                padding: const EdgeInsets.only(left: 26.0),
-                child: PageView.builder(
-                  scrollDirection: Axis.vertical,
-                  controller: _pageController,
-                  itemCount: textList.length,
-                  itemBuilder: (context, index) {
-                    return Text(
-                      textList[index],
-                      style: GoogleFonts.roboto(
-                        fontSize: 36.0,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
+          NavBar(pageController: _pageController, textList: textList),
         ],
       ),
+    );
+  }
+}
+
+class NavBar extends StatelessWidget {
+  const NavBar({
+    super.key,
+    required PageController pageController,
+    required this.textList,
+  }) : _pageController = pageController;
+
+  final PageController _pageController;
+  final List<String> textList;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 48.0),
+        Navbar(),
+        const SizedBox(height: 32.0),
+
+        Container(
+          height: 120.0,
+          padding: const EdgeInsets.only(left: 26.0),
+          child: PageView.builder(
+            scrollDirection: Axis.vertical,
+            controller: _pageController,
+            itemCount: textList.length,
+            itemBuilder: (context, index) {
+              return Text(
+                textList[index],
+                style: GoogleFonts.roboto(
+                  fontSize: 36.0,
+                  fontWeight: FontWeight.w600,
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
