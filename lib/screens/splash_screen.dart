@@ -14,7 +14,7 @@ class SplashScreen extends StatelessWidget {
             duration: const Duration(seconds: 2),
             tween: Tween<double>(begin: 0, end: 1),
             curve: Curves.bounceOut,
-            onEnd: () {
+            onEnd: () async {
               context.push("/home");
             },
             builder: (context, double value, child) {

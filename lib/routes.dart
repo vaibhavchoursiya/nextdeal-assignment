@@ -19,7 +19,8 @@ class AppRouter {
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) => child,
             child: HomeScreen(),
-            transitionDuration: Duration(milliseconds: 800),
+
+            transitionDuration: Duration(milliseconds: 1500),
           );
         },
       ),

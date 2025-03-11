@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
             left: 0.0,
             top: -110.0,
             child: TweenAnimationBuilder(
-              duration: Duration(milliseconds: 700),
+              duration: Duration(milliseconds: 1400),
               tween: Tween(begin: MediaQuery.of(context).size, end: Size(0, 0)),
               curve: Curves.linear,
               onEnd: () {
@@ -95,8 +95,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           AnimatedPositioned(
-            duration: Duration(seconds: 1),
-            top: 100,
+            duration: Duration(milliseconds: 500),
+            top: startDragAnimation ? 100 : 500,
             left: 0.0,
             right: 0.0,
             height: 750,
