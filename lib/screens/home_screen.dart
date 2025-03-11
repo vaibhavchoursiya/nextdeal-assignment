@@ -27,14 +27,14 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> textList = [
     "Find Your Dream\nHome with Ease!",
     "Verified Listings for\nSafe Investments!",
-    "Buy, Sell & Rent\n-All in One Place!",
-    "Expert Guidance\nfor Smart Moves",
+    "Buy, Sell & Rent -All\nin One Place!",
+    "Expert Guidance for\nSmart Moves",
     "Better Future\nBetter Home! ",
   ];
 
-  List<String> imageUrl = List.generate(5, (e) {
-    return "https://picsum.photos/200/300";
-  });
+  // List<String> imageUrl = List.generate(5, (e) {
+  //   return "https://picsum.photos/200/300";
+  // });
 
   // List<String> imageUrl = [
   //   "assets/slide_images/slide_1.jpg",
@@ -43,6 +43,14 @@ class _HomeScreenState extends State<HomeScreen> {
   //   "assets/slide_images/slide_4.jpg",
   //   "assets/slide_images/slide_5.jpg",
   // ];
+
+  List<String> imageUrl = [
+    "https://images.unsplash.com/photo-1587913560680-7f8187bf9634?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://plus.unsplash.com/premium_photo-1661313639796-8c38ae96756f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGhvdXNlJTIwYnVpbGRpbmd8ZW58MHx8MHx8fDA%3D",
+    "https://images.unsplash.com/photo-1534237710431-e2fc698436d0?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YnVpbGRpbmd8ZW58MHx8MHx8fDA%3D",
+    "https://images.unsplash.com/photo-1554435493-93422e8220c8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJ1aWxkaW5nfGVufDB8fDB8fHww",
+  ];
 
   @override
   void initState() {
