@@ -29,20 +29,20 @@ class _HomeScreenState extends State<HomeScreen> {
     "Verified Listings for\nSafe Investments!",
     "Buy, Sell & Rent\n-All in One Place!",
     "Expert Guidance\nfor Smart Moves",
-    "Keep Coding! \nadsfasd asdfasdf",
+    "Better Future\nBetter Home! ",
   ];
 
-  // List<String> imageUrl = List.generate(5, (e) {
-  //   return "https://picsum.photos/200/300";
-  // });
+  List<String> imageUrl = List.generate(5, (e) {
+    return "https://picsum.photos/200/300";
+  });
 
-  List<String> imageUrl = [
-    "assets/slide_images/slide_1.jpg",
-    "assets/slide_images/slide_2.jpg",
-    "assets/slide_images/slide_3.jpg",
-    "assets/slide_images/slide_4.jpg",
-    "assets/slide_images/slide_5.jpg",
-  ];
+  // List<String> imageUrl = [
+  //   "assets/slide_images/slide_1.jpg",
+  //   "assets/slide_images/slide_2.jpg",
+  //   "assets/slide_images/slide_3.jpg",
+  //   "assets/slide_images/slide_4.jpg",
+  //   "assets/slide_images/slide_5.jpg",
+  // ];
 
   @override
   void initState() {
@@ -145,13 +145,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 420.0,
                           margin: const EdgeInsets.symmetric(horizontal: 5.0),
                           decoration: BoxDecoration(
-                            color: Colors.green,
+                            // color: Colors.green,
                             borderRadius: BorderRadius.circular(20.0),
+
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              filterQuality: FilterQuality.medium,
+                              filterQuality: FilterQuality.low,
 
-                              image: AssetImage(imageUrl[index]),
+                              // image: AssetImage(imageUrl[index]),
+                              image: NetworkImage(imageUrl[index]),
                             ),
                           ),
                         );
